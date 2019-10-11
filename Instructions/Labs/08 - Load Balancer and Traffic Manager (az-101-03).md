@@ -87,7 +87,7 @@ The main tasks for this exercise are as follows:
 
     - Image SKU: **2016-Datacenter**
 
-    - Vm Size: **Standard_D2s_v3**
+    - Vm Size: use **Standard_DS1_v2** or **Standard_DS2_v2**, based on the instructor's recommendations
 
     - Virtual Network Name: **az1010301-vnet**
 
@@ -156,7 +156,7 @@ The main tasks for this exercise are as follows:
 
     - Image SKU: **2016-Datacenter**
 
-    - Vm Size: **Standard_D2s_v3**
+    - Vm Size: use **Standard_DS1_v2** or **Standard_DS2_v2**, based on the instructor's recommendations
 
     - Virtual Network Name: **az1010302-vnet**
 
@@ -318,8 +318,6 @@ The main tasks for this exercise are as follows:
     - Subscription: the name of the subscription you are using in this lab
 
     - Resource group: **az1010302-RG**
-
-    - Location: the name of the Azure region in which you deployed Azure VMs in the second task of the previous exercise
 
 1. In the Azure portal, navigate to the blade of the newly deployed Azure load balancer **az1010302w-lb**.
 
@@ -550,7 +548,7 @@ The main tasks for this exercise are as follows:
 
    > **Note**: Repeat the same tests for the second region.
 
-> **Result**: After you completed this exercise, you have implemented and verified load balancing rules and NAT rules of Azure load balancers in both regions.
+> **Result**: After you completed this exercise, you have implemented load balancing rules and NAT rules of Azure in two Azure regions and verified load balancing rules and NAT rules of Azure load balancers in the first region.
 
 
 ### Exercise 2: Implement Azure Traffic Manager load balancing
@@ -674,3 +672,31 @@ The main tasks for this exercise are as follows:
 1. Review the output and note the **Name** entry. This time, the entry should match the DNS name of the other Traffic Manager profile endpoint you created in the previous task.
 
 > **Result**: After you completed this exercise, you have implemented and verified Azure Traffic Manager load balancing
+
+## Exercise 3: Remove lab resources
+
+#### Task 1: Open Cloud Shell
+
+1. At the top of the portal, click the **Cloud Shell** icon to open the Cloud Shell pane.
+
+1. At the Cloud Shell interface, select **Bash**.
+
+1. At the **Cloud Shell** command prompt, type in the following command and press **Enter** to list all resource groups you created in this lab:
+
+   ```sh
+   az group list --query "[?starts_with(name,'az101030')].name" --output tsv
+   ```
+
+1. Verify that the output contains only the resource groups you created in this lab. These groups will be deleted in the next task.
+
+#### Task 2: Delete resource groups
+
+1. At the **Cloud Shell** command prompt, type in the following command and press **Enter** to delete the resource groups you created in this lab
+
+   ```sh
+   az group list --query "[?starts_with(name,'az101030')].name" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
+   ```
+
+1. Close the **Cloud Shell** prompt at the bottom of the portal.
+
+> **Result**: In this exercise, you removed the resources used in this lab.

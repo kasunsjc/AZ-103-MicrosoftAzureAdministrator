@@ -6,7 +6,7 @@ lab:
 
 # Lab: Deploy and Manage Virtual Machines
 
-All tasks in this lab are performed from the Azure portal (including a PowerShell Cloud Shell session) except for Excercise 2 Task 2 and Exercise 2 Task 3, which include steps performed from a Remote Desktop session to an Azure VM
+All tasks in this lab are performed from the Azure portal (including a PowerShell Cloud Shell session) except for Exercise 2 Task 2 and Exercise 2 Task 3, which include steps performed from a Remote Desktop session to an Azure VM
 
    > **Note**: When not using Cloud Shell, the lab virtual machine must have Azure PowerShell module installed [**https://docs.microsoft.com/en-us/powershell/azure/install-Az-ps**](https://docs.microsoft.com/en-us/powershell/azure/install-Az-ps)
 
@@ -53,7 +53,7 @@ The main tasks for this exercise are as follows:
 
 1. From the **Create a resource** blade, search Azure Marketplace for **Windows Server**. Select **Windows Server** from the search results list.
 
-1. On the Windows Server page, use the drop-down menu to select **Windows Server 2016 Datacenter**, and then click **Create**.
+1. On the Windows Server page, use the drop-down menu to select **[smalldisk] Windows Server 2016 Datacenter**, and then click **Create**.
 
 1. Use the **Create a virtual machine** blade to deploy a virtual machine with the following settings:
 
@@ -84,12 +84,14 @@ The main tasks for this exercise are as follows:
     - Already have a Windows license?: **No**
 
 1. Click **Next: Disks >**.    
+
     - OS disk type: **Standard HDD**
 
 1. Click **Next: Networking >**.
 
-1. On the Networking tab, click **Create new** under Virtual Network. Leave the existing default range and subnet, and add the following:
-    - Address range: **10.103.0.0/16**
+1. On the Networking tab, click **Create new** under Virtual Network. Use the virtual network name already assigned by default and specify the following:
+
+    - Virtual network address range: **10.103.0.0/16**
 
     - Subnet name: **subnet0**
 
@@ -216,7 +218,7 @@ The main tasks for this exercise are as follows:
 
 1. From the **Edit template** blade, load the template file **Labfiles\\Module_02\\Deploy_and_Manage_Virtual_Machines\\az-100-03_azuredeploy.json**. 
 
-   > **Note**: Review the content of the template and note that it defines deployment of two Azure VMs hosting Linux Ubuntu into an availability set and into the existing virtual network **az1000301-vnet0**.
+   > **Note**: Review the content of the template and note that it defines deployment of two Azure VMs hosting Linux Ubuntu into an availability set and into the existing virtual network **az1000301-vnet0**. This virtual network does not exist in your deployment. You will be changing the virtual network name in the parameters below.
 
 1. Save the template and return to the **Custom deployment** blade. 
 
@@ -244,7 +246,7 @@ The main tasks for this exercise are as follows:
 
     - Admin Password: **Pa55w.rd1234**
 
-    - Virtual Network Name: **az1000301-RG-vnet**
+    - Virtual Network Name: **az1000301-RG-vnet** _(change this value from the template default)_
 
     - Image Publisher: **Canonical**
 
@@ -252,7 +254,7 @@ The main tasks for this exercise are as follows:
 
     - Image SKU: **16.04.0-LTS**
 
-    - Vm Size: **Standard_DS2_v2**
+    - Vm Size: use **Standard_DS1_v2** or **Standard_DS2_v2**, based on the instructor's recommendations 
 
    > **Note**: Wait for the deployment to complete before you proceed to the next task. This should take about 5 minutes.
 
@@ -459,6 +461,16 @@ The main tasks for this exercise are as follows:
         - Subnet address range: **10.203.0.0/24**
 
     - Public IP address per instance: **Off**
+    
+    - Accelerated networking: **Off**
+    
+    - NIC network security group: **Basic**
+    
+    - Select inbound ports: **HTTP**
+    
+    - Boot diagnostics: **Off**
+    
+    - System assigned managed identity: **Off**
 
    > **Note**: Wait for the deployment to complete before you proceed to the next task. This should take about 5 minutes.
 

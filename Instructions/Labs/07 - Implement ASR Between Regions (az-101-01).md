@@ -92,7 +92,7 @@ The main tasks for this exercise are as follows:
  
 1. In the Azure portal, navigate to the **Create a resource** blade.
 
-1. From the **Create a resource** blade, search Azure Marketplace for **Backup and Site Recovery (OMS)**.
+1. From the **Create a resource** blade, search Azure Marketplace for **Backup and Site Recovery**.
 
 1. Use the list of search results to navigate to the **Recovery Services vault** blade.
 
@@ -138,7 +138,7 @@ The main tasks for this exercise are as follows:
 
     - Virtual machines: **az1010101-vm**
 
-    - Target location: the name of an Azure region that is available in your subscription and which is different from the region you deployed an Azure VM in the previous task. If possible, use the same Azure region into which you deployed the Azure Site Recovery vault.
+    - Target location: the name of an **Azure region** that is available in your subscription and which is **different from the region you deployed an Azure VM** in the previous task. If possible, use the same Azure region into which you deployed the Azure Site Recovery vault.
 
     - Target resource group: **(new) az1010101-RG-asr**
 

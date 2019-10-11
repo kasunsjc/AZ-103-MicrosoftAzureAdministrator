@@ -83,7 +83,7 @@ The main tasks for this exercise are as follows:
 
     - Location: the name of the Azure region which is closest to the lab location and where you can provision Azure VMs
 
-    - Vm Size: **Standard_DS2_v2**
+    - Vm Size: use **Standard_DS1_v2** or **Standard_DS2_v2**, based on the instructor's recommendations
 
     - Vm Name: **az1000201-vm1**
 
@@ -201,7 +201,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 3: Manage Azure Storage Blob Service
 
-1. In the Azure portal, navigate to the **Blobs** blade of the first storage account. 
+1. In the Azure portal, navigate to the **Blobs** blade of the first storage account you created. 
 
 1. From the **Blobs** blade of the first storage account, create a new container named **az1000202-container** with the **Public access level** set to **Private (no anonymous access)**. 
 
@@ -217,30 +217,47 @@ The main tasks for this exercise are as follows:
 1. In the Cloud Shell pane, run the following commands:
 
    ```pwsh
+   $containerName = 'az1000202-container'
    $storageAccount1Name = (Get-AzStorageAccount -ResourceGroupName 'az1000202-RG')[0].StorageAccountName
    $storageAccount2Name = (Get-AzStorageAccount -ResourceGroupName 'az1000203-RG')[0].StorageAccountName
    $storageAccount1Key1 = (Get-AzStorageAccountKey -ResourceGroupName 'az1000202-RG' -StorageAccountName $storageAccount1Name)[0].Value
    $storageAccount2Key1 = (Get-AzStorageAccountKey -ResourceGroupName 'az1000203-RG' -StorageAccountName $storageAccount2Name)[0].Value
+   $context1 = New-AzStorageContext -StorageAccountName $storageAccount1Name -StorageAccountKey $storageAccount1Key1
+   $context2 = New-AzStorageContext -StorageAccountName $storageAccount2Name -StorageAccountKey $storageAccount2Key1
    ```
-
-   > **Note**: These commands set the values of variables representing the names of each storage account and their corresponding keys. You will use these values to copy blobs between storage accounts by using the AZCopy command line utility in the next step.
+   > **Note**: These commands set the values of variables representing the names of the blob container containing the blobs you uploaded in the previous task, the two storage accounts, their corresponding keys, and the corresponding security context for each. You will use these values to generate a SAS token to copy blobs between storage accounts by using the AZCopy command line utility.
 
 1. In the Cloud Shell pane, run the following command:
 
    ```pwsh
-   azcopy --source https://$storageAccount1Name.blob.core.windows.net/az1000202-container/ --destination https://$storageAccount2Name.blob.core.windows.net/az1000203-container/ --source-key $storageAccount1Key1 --dest-key $storageAccount2Key1 --include "az" --sync-copy --recursive
+   New-AzStorageContainer -Name $containerName -Context $context2 -Permission Off
+   ```
+   > **Note**: This command creates a new container with the matching name in the second storage account
+   
+1. In the Cloud Shell pane, run the following commands:
+
+   ```pwsh
+   $containerToken1 = New-AzStorageContainerSASToken -Context $context1 -ExpiryTime(get-date).AddHours(24) -FullUri -Name $containerName -Permission rwdl
+   $containerToken2 = New-AzStorageContainerSASToken -Context $context2 -ExpiryTime(get-date).AddHours(24) -FullUri -Name $containerName -Permission rwdl
+   ```
+   > **Note**: These commands generate SAS keys that you will use in the next step to copy blobs between two containers.
+   
+1. In the Cloud Shell pane, run the following command:
+
+   ```pwsh
+   azcopy cp $containerToken1 $containerToken2 --recursive=true
    ```
 
    > **Note**: This command uses the AzCopy utility to copy the content of the container between the two storage accounts. 
 
 1. Verify that the command returned the results confirming that the two files were transferred. 
 
-1. Navigate to the **Blobs** blade of the second storage account and verify that it includes the entry representing the newly created **az1000203-container** and that the container includes two copied blobs.
+1. Navigate to the **Blobs** blade of the second storage account and verify that it includes the entry representing the newly created **az1000202-container** and that the container includes two copied blobs.
 
 
 #### Task 5: Use a Shared Access Signature (SAS) key to access a blob
 
-1. From the **Blobs** blade of the second storage account, navigate to the container **az1000203-container**, and then open the **az-100-02_azuredeploy.json** blade.
+1. From the **Blobs** blade of the second storage account, navigate to the container **az1000202-container**, and then open the **az-100-02_azuredeploy.json** blade.
 
 1. On the **az-100-02_azuredeploy.json** blade, copy the value of the **URL** property.
 
@@ -286,7 +303,7 @@ The main tasks for this exercise are as follows:
   
 1. In the Azure portal, navigate to the blade displaying the properties of the second storage account you created in the previous exercise.
 
-1. From the storage account blade, display the properties of its File Service.
+1. From the storage account blade select Files under File Service.
 
 1. From the storage account **Files** blade, create a new file share with the following settings:
 

@@ -8,7 +8,7 @@ lab:
 
 All tasks in this lab are performed from the Azure portal (including a PowerShell Cloud Shell session) except for Exercise 1 Task 3, which includes steps performed from a Remote Desktop session to an Azure VM
 
-Lab files: 
+Lab files:
 
 -  **Labfiles\\Module_08\\Load_Balancer_and_Traffic_Manager\\az-101-03_01_azuredeploy.json**
 
@@ -17,12 +17,12 @@ Lab files:
 -  **Labfiles\\Module_08\\Load_Balancer_and_Traffic_Manager\\az-101-03_01_2_azuredeploy.parameters.json**
 
 ### Scenario
-  
+
 Adatum Corporation wants to implement Azure VM-hosted web workloads and facilitate their management for its subsidiary Contoso Corporation in a highly available manner by leveraging load balancing and Network Address Translation (NAT) features of Azure Load Balancer
 
 
 ### Objectives
-  
+
 After completing this lab, you will be able to:
 
 -  Deploy Azure VMs by using Azure Resource Manager templates
@@ -33,7 +33,7 @@ After completing this lab, you will be able to:
 
 
 ### Exercise 0: Deploy Azure VMs by using Azure Resource Manager templates
-  
+
 The main tasks for this exercise are as follows:
 
 1. Deploy management Azure VMs running Windows Server 2016 Datacenter with the Web Server (IIS) role installed into an availability set in the first Azure region by using an Azure Resource Manager template
@@ -45,25 +45,25 @@ The main tasks for this exercise are as follows:
 
 1. From the lab virtual machine, start Microsoft Edge, browse to the Azure portal at [**http://portal.azure.com**](http://portal.azure.com) and sign in by using a Microsoft account that has the Owner role in the target Azure subscription.
 
-1. In the Azure portal, navigate to the **Create a resource** blade.
+1. In the Azure portal, navigate to the **New** blade.
 
-1. From the **Create a resource** blade, search Azure Marketplace for **Template deployment**.
+1. From the **New** blade, search Azure Marketplace for **Template deployment**.
 
 1. Use the list of search results to navigate to the **Deploy a custom template** blade.
 
 1. On the **Custom deployment** blade, click the **Build your own template in the editor** link. If you do not see this link, click **Edit template** instead.
 
-1. From the **Edit template** blade, load the template file **Labfiles\\Module_08\\Load_Balancer_and_Traffic_Manager\\az-101-03_01_azuredeploy.json**. 
+1. From the **Edit template** blade, load the template file **Labfiles\\Module_08\\Load_Balancer_and_Traffic_Manager\\az-101-03_01_azuredeploy.json**.
 
    > **Note**: Review the content of the template and note that it defines deployment of two Azure VMs hosting Windows Server 2016 Datacenter Core into an availability set.
 
-1. Save the template and return to the **Custom deployment** blade. 
+1. Save the template and return to the **Custom deployment** blade.
 
 1. From the **Custom deployment** blade, navigate to the **Edit parameters** blade.
 
-1. From the **Edit parameters** blade, load the parameters file **Labfiles\\Module_08\\Load_Balancer_and_Traffic_Manager\\az-101-03_01_1_azuredeploy.parameters.json**. 
+1. From the **Edit parameters** blade, load the parameters file **Labfiles\\Module_08\\Load_Balancer_and_Traffic_Manager\\az-101-03_01_1_azuredeploy.parameters.json**.
 
-1. Save the parameters and return to the **Custom deployment** blade. 
+1. Save the parameters and return to the **Custom deployment** blade.
 
 1. From the **Custom deployment** blade, initiate a template deployment with the following settings:
 
@@ -87,7 +87,7 @@ The main tasks for this exercise are as follows:
 
     - Image SKU: **2016-Datacenter**
 
-    - Vm Size: use **Standard_DS1_v2** or **Standard_DS2_v2**, based on the instructor's recommendations
+    - Vm Size: use **Standard_DS2_v2**
 
     - Virtual Network Name: **az1010301-vnet**
 
@@ -107,32 +107,32 @@ The main tasks for this exercise are as follows:
 
     - Configuration Function: **ContosoWebsite.ps1\\ContosoWebsite**
 
-   > **Note**: To identify Azure regions where you can provision Azure VMs, refer to [**https://azure.microsoft.com/en-us/regions/offers/**](https://azure.microsoft.com/en-us/regions/offers/)
+    > **Note**: To identify Azure regions where you can provision Azure VMs, refer to [**https://azure.microsoft.com/en-us/regions/offers/**](https://azure.microsoft.com/en-us/regions/offers/)
 
-   > **Note**: Do not wait for the deployment to complete but proceed to the next task. 
+   > **Note**: Do not wait for the deployment to complete but proceed to the next task.
 
 
 #### Task 2: Deploy management Azure VMs running Windows Server 2016 Datacenter with the Web Server (IIS) role installed into an availability set in the second Azure region by using an Azure Resource Manager template
 
-1. In the Azure portal, navigate to the **Create a resource** blade.
+1. In the Azure portal, navigate to the **New** blade.
 
-1. From the **Create a resource** blade, search Azure Marketplace for **Template deployment**.
+1. From the **New** blade, search Azure Marketplace for **Template deployment**.
 
 1. Use the list of search results to navigate to the **Deploy a custom template** blade.
 
 1. On the **Custom deployment** blade, click the **Build your own template in the editor** link. If you do not see this link, click **Edit template** instead.
 
-1. From the **Edit template** blade, load the template file **Labfiles\\Module_08\\Load_Balancer_and_Traffic_Manager\\az-101-03_01_azuredeploy.json**. 
+1. From the **Edit template** blade, load the template file **Labfiles\\Module_08\\Load_Balancer_and_Traffic_Manager\\az-101-03_01_azuredeploy.json**.
 
-   > **Note**: This is the same template you used in the previous task. You will use it to deploy a pair of Azure VMs to the second region. 
+   > **Note**: This is the same template you used in the previous task. You will use it to deploy a pair of Azure VMs to the second region.
 
-1. Save the template and return to the **Custom deployment** blade. 
+1. Save the template and return to the **Custom deployment** blade.
 
 1. From the **Custom deployment** blade, navigate to the **Edit parameters** blade.
 
-1. From the **Edit parameters** blade, load the parameters file **Labfiles\\Module_08\\Load_Balancer_and_Traffic_Manager\\az-101-03_01_2_azuredeploy.parameters.json**. 
+1. From the **Edit parameters** blade, load the parameters file **Labfiles\\Module_08\\Load_Balancer_and_Traffic_Manager\\az-101-03_01_2_azuredeploy.parameters.json**.
 
-1. Save the parameters and return to the **Custom deployment** blade. 
+1. Save the parameters and return to the **Custom deployment** blade.
 
 1. From the **Custom deployment** blade, initiate a template deployment with the following settings:
 
@@ -140,7 +140,7 @@ The main tasks for this exercise are as follows:
 
     - Resource group: the name of a new resource group **az1010302-RG**
 
-    - Location: the name of the Azure region different from the one you chose in the previous task and where you can provision Azure VMs
+    - Location: the name of the Azure region ***different from the one you chose in the previous task*** and where you can provision Azure VMs
 
     - Admin Username: **Student**
 
@@ -156,7 +156,7 @@ The main tasks for this exercise are as follows:
 
     - Image SKU: **2016-Datacenter**
 
-    - Vm Size: use **Standard_DS1_v2** or **Standard_DS2_v2**, based on the instructor's recommendations
+    - Vm Size: use **Standard_DS2_v2**
 
     - Virtual Network Name: **az1010302-vnet**
 
@@ -182,7 +182,7 @@ The main tasks for this exercise are as follows:
 
 
 ### Exercise 1: Implement Azure Load Balancing
-  
+
 The main tasks for this exercise are as follows:
 
 1. Implement Azure load balancing rules in the first region.
@@ -198,31 +198,35 @@ The main tasks for this exercise are as follows:
 
 #### Task 1: Implement Azure load balancing rules in the first region
 
-   > **Note**: Before you start this task, ensure that the template deployment you started in the first task of the previous exercise has completed. 
+   > **Note**: Before you start this task, ensure that the template deployment you started in the first task of the previous exercise has completed.
 
-1. In the Azure portal, navigate to the **Create a resource** blade.
+1. In the Azure portal, navigate to the **New** blade.
 
-1. From the **Create a resource** blade, search Azure Marketplace for **Load Balancer**.
+1. From the **New** blade, search Azure Marketplace for **Load Balancer**.
 
 1. Use the list of search results to navigate to the **Create load balancer** blade.
 
 1. From the **Create load balancer** blade, create a new Azure Load Balancer with the following settings:
 
-    - Name: **az1010301w-lb**
-
-    - Type: **Public**
-
-    - SKU: **Basic**
-
-    - Public IP address: a new public IP address named **az1010301w-lb-pip**
-
-    - Assignment: **Dynamic**
-
     - Subscription: the name of the subscription you are using in this lab
 
     - Resource group: **az1010301-RG**
+    
+    - Name: **az1010301w-lb**
 
-    - Location: the name of the Azure region in which you deployed Azure VMs in the first task of the previous exercise
+    - Region: the name of the Azure region in which you deployed Azure VMs in the first task of the previous exercise
+    
+    - Type: **Public**
+
+    - SKU: **Basic**
+    
+    - Public IP address: a new public IP address named **az1010301w-lb-pip**
+
+    - Public IP address SKU: **Basic**
+    
+    - Assignment: **Dynamic**
+    
+    - Add a public IPv6 address: **No**
 
 1. In the Azure portal, navigate to the blade of the newly deployed Azure load balancer **az1010301w-lb**.
 
@@ -232,21 +236,21 @@ The main tasks for this exercise are as follows:
 
     - Name: **az1010301w-bepool**
 
+    - Virtual network: **az1010301-vnet**
+
     - IP version: **IPv4**
 
-    - Associated to: **Availability set**
+    - Associated to: **Virtual machine**
 
-    - Availability set: **az1010301w-avset**
-
-    - Virtual machine: **az1010301w-vm0** 
+    - Virtual machine: **az1010301w-vm0**
 
     - Network IP configuration: **az1010301w-nic0/ipconfig1 (10.101.31.4)**
 
-    - Virtual machine: **az1010301w-vm1** 
+    - Virtual machine: **az1010301w-vm1**
 
     - Network IP configuration: **az1010301w-nic1/ipconfig1 (10.101.31.5)**
 
-   > **Note**: It is possible that the IP addresses of the Azure VMs are assigned in the reverse order. 
+    > **Note**: It is possible that the IP addresses of the Azure VMs are assigned in the reverse order.
 
    > **Note**: Wait for the operation to complete. This should take less than a minute.
 
@@ -295,17 +299,23 @@ The main tasks for this exercise are as follows:
 
 #### Task 2: Implement Azure load balancing rules in the second region
 
-   > **Note**: Before you start this task, ensure that the template deployment you started in the second task of the previous exercise has completed. 
+   > **Note**: Before you start this task, ensure that the template deployment you started in the second task of the previous exercise has completed.
 
-1. In the Azure portal, navigate to the **Create a resource** blade.
+1. In the Azure portal, navigate to the **New** blade.
 
-1. From the **Create a resource** blade, search Azure Marketplace for **Load Balancer**.
+1. From the **New** blade, search Azure Marketplace for **Load Balancer**.
 
 1. Use the list of search results to navigate to the **Create load balancer** blade.
 
 1. From the **Create load balancer** blade, create a new Azure Load Balancer with the following settings:
 
+    - Subscription: the name of the subscription you are using in this lab
+
+    - Resource group: **az1010302-RG**
+
     - Name: **az1010302w-lb**
+
+    - Region: the name of the Azure region in which you deployed Azure VMs in the second task of the previous exercise
 
     - Type: **Public**
 
@@ -313,11 +323,11 @@ The main tasks for this exercise are as follows:
 
     - Public IP address: a new public IP address named **az1010302w-lb-pip**
 
+    - Public IP address SKU: **Basic**
+    
     - Assignment: **Dynamic**
-
-    - Subscription: the name of the subscription you are using in this lab
-
-    - Resource group: **az1010302-RG**
+    
+    - Add a public IPv6 address: **No**
 
 1. In the Azure portal, navigate to the blade of the newly deployed Azure load balancer **az1010302w-lb**.
 
@@ -327,21 +337,21 @@ The main tasks for this exercise are as follows:
 
     - Name: **az1010302w-bepool**
 
+    - Virtual network: **az1010302-vnet**
+
     - IP version: **IPv4**
 
-    - Associated to: **Availability set**
+    - Associated to: **Virtual machine**
 
-    - Availability set: **az1010302w-avset**
-
-    - Virtual machine: **az1010302w-vm0** 
+    - Virtual machine: **az1010302w-vm0**
 
     - Network IP configuration: **az1010302w-nic0/ipconfig1 (10.101.32.4)**
 
-    - Virtual machine: **az1010302w-vm1** 
+    - Virtual machine: **az1010302w-vm1**
 
     - Network IP configuration: **az1010302w-nic1/ipconfig1 (10.101.32.5)**
 
-   > **Note**: It is possible that the IP addresses of the Azure VMs are assigned in the reverse order. 
+    > **Note**: It is possible that the IP addresses of the Azure VMs are assigned in the reverse order.
 
    > **Note**: Wait for the operation to complete. This should take less than a minute.
 
@@ -408,6 +418,8 @@ The main tasks for this exercise are as follows:
 
     - Protocol: **TCP**
 
+    - Idle timeout (minutes): **4**
+
     - Port: **33890**
 
     - Target virtual machine: **az1010301w-vm0**
@@ -433,6 +445,8 @@ The main tasks for this exercise are as follows:
     - Service: **Custom**
 
     - Protocol: **TCP**
+
+    - Idle timeout (minutes): **4**
 
     - Port: **33891**
 
@@ -467,6 +481,8 @@ The main tasks for this exercise are as follows:
 
     - Protocol: **TCP**
 
+    - Idle timeout (minutes): **4**
+
     - Port: **33890**
 
     - Target virtual machine: **az1010302w-vm0**
@@ -492,6 +508,8 @@ The main tasks for this exercise are as follows:
     - Service: **Custom**
 
     - Protocol: **TCP**
+
+    - Idle timeout (minutes): **4**
 
     - Port: **33891**
 
@@ -524,7 +542,7 @@ The main tasks for this exercise are as follows:
 
 1. On the **az1010301w-lb** blade, identify the public IP address assigned to the load balancer frontend.
 
-1. From the lab virtual machine, run the following command, after replacing the &lt;az1010301w-lb_public_IP&lt; placeholder with the IP address you identified in the previous task:
+1. From the lab virtual machine, start Command Prompt and run the following command, after replacing the ***&lt;az1010301w-lb_public_IP&gt;*** placeholder with the IP address you identified in the previous task:
 
    ```
    mstsc /v:<az1010301w-lb_public_IP>:33890
@@ -538,7 +556,7 @@ The main tasks for this exercise are as follows:
 
     - Admin Password: **Pa55w.rd1234**
 
-1. Once you sign in, from the command prompt, run the following command:
+1. Once you sign in, start Command Prompt and run the following command:
 
    ```
    hostname
@@ -546,9 +564,12 @@ The main tasks for this exercise are as follows:
 
 1. Review the output and verify that you are actually connected to the **az1010301w-vm0** Azure VM.
 
-   > **Note**: Repeat the same tests for the second region.
+1. Sign out of the remote desktop session.
+
+> **Note**: Repeat the same tests for the second region.
 
 > **Result**: After you completed this exercise, you have implemented load balancing rules and NAT rules of Azure in two Azure regions and verified load balancing rules and NAT rules of Azure load balancers in the first region.
+
 
 
 ### Exercise 2: Implement Azure Traffic Manager load balancing
@@ -564,30 +585,30 @@ The main tasks for this exercise are as follows:
 
 #### Task 1: Assign DNS names to public IP addresses of Azure load balancers
 
-   > **Note**: This task is necessary because each Traffic Manager endpoint must have a DNS name assigned. 
+   > **Note**: This task is necessary because each Traffic Manager endpoint must have a DNS name assigned.
 
-1. In the Azure portal, navigate to the blade of the public IP address resource associated with the Azure load balancer in the first region named **az1010301w-lb-pip**. 
+1. In the Azure portal, navigate to the blade of the public IP address resource associated with the Azure load balancer in the first region named **az1010301w-lb-pip**.
 
-1. From the **az1010301w-lb-pip** blade, display its **Configuration** blade. 
+1. From the **az1010301w-lb-pip** blade, display its **Configuration** blade.
 
-1. From the **az1010301w-lb-pip - Configuration** blade set the **DNS name label** of the public IP address to a unique value. 
+1. From the **az1010301w-lb-pip - Configuration** blade set the **DNS name label** of the public IP address to a unique value.
 
-   > **Note**: The green check mark in the **DNS name label (optional)** text box will indicate whether the name you typed in is valid and unique. 
+   > **Note**: The green check mark in the **DNS name label (optional)** text box will indicate whether the name you typed in is valid and unique.
 
-1. Navigate to the blade of the public IP address resource associated with the Azure load balancer in the second region named **az1010302w-lb-pip**. 
+1. Navigate to the blade of the public IP address resource associated with the Azure load balancer in the second region named **az1010302w-lb-pip**.
 
-1. From the **az1010302w-lb-pip** blade, display its **Configuration** blade. 
+1. From the **az1010302w-lb-pip** blade, display its **Configuration** blade.
 
-1. From the **az1010302w-lb-pip - Configuration** blade set the **DNS name label** of the public IP address to a unique value. 
+1. From the **az1010302w-lb-pip - Configuration** blade set the **DNS name label** of the public IP address to a unique value.
 
-   > **Note**: The green check mark in the **DNS name label (optional)** text box will indicate whether the name you typed in is valid and unique. 
+   > **Note**: The green check mark in the **DNS name label (optional)** text box will indicate whether the name you typed in is valid and unique.
 
 
 #### Task 2: Implement Azure Traffic Manager load balancing
 
-1. In the Azure portal, navigate to the **Create a resource** blade.
+1. In the Azure portal, navigate to the **New** blade.
 
-1. From the **Create a resource** blade, search Azure Marketplace for **Traffic Manager profile**.
+1. From the **New** blade, search Azure Marketplace for **Traffic Manager profile**.
 
 1. Use the list of search results to navigate to the **Create Traffic Manager profile** blade.
 
@@ -650,13 +671,13 @@ The main tasks for this exercise are as follows:
 
 1. From the **Endpoints** blade, switch to the **Overview** section of the Traffic Manager profile blade.
 
-1. Note the DNS name assigned to the Traffic Manager profile (the string following the **http://** prefix). 
+1. Note the DNS name assigned to the Traffic Manager profile (the string following the **http://** prefix).
 
-1. From the Azure Portal, start a PowerShell session in the Cloud Shell pane. 
+1. From the Azure Portal, start a PowerShell session in the Cloud Shell pane.
 
    > **Note**:  If this is the first time you are launching the Cloud Shell in the current Azure subscription, you will be asked to create an Azure file share to persist Cloud Shell files. If so, accept the defaults, which will result in creation of a storage account in an automatically generated resource group.
 
-1. In the Cloud Shell pane, run the following command, replacing the &lt;TM_DNS_name&lt; placeholder with the value of the DNS name assigned to the Traffic Manager profile you identified in the previous task:
+1. In the Cloud Shell pane, run the following command, replacing the ***&lt;TM_DNS_name&gt;*** placeholder with the value of the DNS name assigned to the Traffic Manager profile you identified in the previous task:
 
    ```
    nslookup <TM_DNS_name>
@@ -673,7 +694,10 @@ The main tasks for this exercise are as follows:
 
 > **Result**: After you completed this exercise, you have implemented and verified Azure Traffic Manager load balancing
 
+
+
 ## Exercise 3: Remove lab resources
+
 
 #### Task 1: Open Cloud Shell
 
@@ -688,6 +712,7 @@ The main tasks for this exercise are as follows:
    ```
 
 1. Verify that the output contains only the resource groups you created in this lab. These groups will be deleted in the next task.
+
 
 #### Task 2: Delete resource groups
 

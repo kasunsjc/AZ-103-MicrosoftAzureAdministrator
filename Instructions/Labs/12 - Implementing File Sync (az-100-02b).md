@@ -8,18 +8,18 @@ lab:
 
 All tasks in this lab are performed from the Azure portal, except for steps in Exercise 1 and Exercise 2 performed within a Remote Desktop session to an Azure VM.
 
-Lab files: 
+Lab files:
 
 -  **Labfiles\\Module_12\\Implementing_File_Sync\\az-100-02b_azuredeploy.json**
 
 -  **Labfiles\\Module_12\\Implementing_File_Sync\\az-100-02b_azuredeploy.parameters.json**
 
 ### Scenario
-  
+
 Adatum Corporation hosts its file shares in on-premises file servers. Considering its plans to migrate majority of its workloads to Azure, Adatum is looking for the most efficient method to replicate its data to file shares that will be available in Azure. To implement it, Adatum will use Azure File Sync.
 
 ### Objectives
-  
+
 After completing this lab, you will be able to:
 
 -  Deploy an Azure VM by using an Azure Resource Manager template
@@ -30,7 +30,7 @@ After completing this lab, you will be able to:
 
 
 ### Exercise 0: Prepare the lab environment
-  
+
 The main tasks for this exercise are as follows:
 
 1. Deploy an Azure VM by using an Azure Resource Manager template
@@ -48,17 +48,17 @@ The main tasks for this exercise are as follows:
 
 1. On the **Custom deployment** blade, select the **Build your own template in the editor**.
 
-1. From the **Edit template** blade, load the template file **az-100-02b_azuredeploy.json**. 
+1. From the **Edit template** blade, load the template file **Labfiles\\Module_12\\Implementing_File_Sync\\az-100-02b_azuredeploy.json**.
 
-   > **Note**: Review the content of the template and note that it defines deployment of an Azure VM hosting Windows Server 2016 Datacenter with a single data disk.
+     > **Note**: Review the content of the template and note that it defines deployment of an Azure VM hosting Windows Server 2016 Datacenter with a single data disk.
 
-1. Save the template and return to the **Custom deployment** blade. 
+1. Save the template and return to the **Custom deployment** blade.
 
 1. From the **Custom deployment** blade, navigate to the **Edit parameters** blade.
 
-1. From the **Edit parameters** blade, load the parameters file **az-100-02b_azuredeploy.parameters.json**. 
+1. From the **Edit parameters** blade, load the parameters file **Labfiles\\Module_12\\Implementing_File_Sync\\az-100-02b_azuredeploy.parameters.json**.
 
-1. Save the parameters and return to the **Custom deployment** blade. 
+1. Save the parameters and return to the **Custom deployment** blade.
 
 1. From the **Custom deployment** blade, initiate a template deployment with the following settings:
 
@@ -68,7 +68,7 @@ The main tasks for this exercise are as follows:
 
     - Location: the name of the Azure region which is closest to the lab location and where you can provision Azure VMs
 
-    - Vm Size: **Standard_DS1_v2**
+    - Vm Size: **Standard_DS2_v2**
 
     - Vm Name: **az1000201b-vm1**
 
@@ -78,11 +78,12 @@ The main tasks for this exercise are as follows:
 
     - Virtual Network Name: **az1000201b-vnet1**
 
-   > **Note**: To identify Azure regions where you can provision Azure VMs, refer to [**https://azure.microsoft.com/en-us/regions/offers/**](https://azure.microsoft.com/en-us/regions/offers/)
+         > **Note**: To identify Azure regions where you can provision Azure VMs, refer to [**https://azure.microsoft.com/en-us/regions/offers/**](https://azure.microsoft.com/en-us/regions/offers/)
 
-   > **Note**: Do not wait for the deployment to complete but proceed to the next exercise. You will use the virtual machine included in this deployment in the next exercise of this lab.
+     > **Note**: Do not wait for the deployment to complete but proceed to the next exercise. You will use the virtual machine included in this deployment in the next exercise of this lab.
 
-   > **Note**: Keep in mind that the purpose of Azure VM **az1000201b-vm1** is to emulate an on-premises file server in our scenario.
+     > **Note**: Keep in mind that the purpose of Azure VM **az1000201b-vm1** is to emulate an on-premises file server in our scenario.
+
 
 > **Result**: After you completed this exercise, you have initiated a template deployment of an Azure VM **az1000201b-vm1** that you will use in the next exercise of this lab.
 
@@ -106,7 +107,7 @@ The main tasks for this exercise are as follows:
 
 1. Use the list of search results to navigate to the **Create storage account** blade.
 
-1. From the **Create storage account** blade, create a new storage account with the following settings: 
+1. From the **Create storage account** blade, create a new storage account with the following settings:
 
     - Subscription: the same subscription you selected in the previous task
 
@@ -123,20 +124,22 @@ The main tasks for this exercise are as follows:
     - Replication: **Locally-redundant storage (LRS)**
 
     - Connectivity method: **Public endpoint (all networks)**
-    
+
     - Secure transfer required: **Disabled**
-    
+
     - Large file shares: **Disabled**
-    
+
     - Blob soft delete: **Disabled**
-    
+
     - Hierarchical namespace: **Disabled**
 
-   > **Note**: Wait for the storage account to be provisioned then proceed to the next step.
+    - NFS v3: **Disabled**
+
+     > **Note**: Wait for the storage account to be provisioned, then proceed to the next step.
 
 1. In the Azure portal, navigate to the blade representing the newly provisioned storage account.
 
-1. From the storage account blade, display its File Shares blade.
+1. From the storage account blade, display its **File shares** blade.
 
 1. From the storage account **File shares** blade, create a new file share with the following settings:
 
@@ -147,7 +150,7 @@ The main tasks for this exercise are as follows:
 
 #### Task 2: Prepare Windows Server 2016 for use with Azure File Sync
 
-   > **Note**: Before you start this task, ensure that the template deployment you started in Exercise 0 has completed. 
+ > **Note**: Before you start this task, ensure that the template deployment you started in Exercise 0 has completed.
 
 1. In the Azure portal, navigate to the **az1000201b-vm1** blade.
 
@@ -167,19 +170,19 @@ The main tasks for this exercise are as follows:
 
     - Volume label: **Data**
 
-1. Within the RDP session, start a Windows PowerShell session as administrator. 
+1. Within the RDP session, start a Windows PowerShell session as administrator.
 
 1. From the Windows PowerShell console, set up a file share by running the following:
 
    ```powershell
    $directory = New-Item -Type Directory -Path 'S:\az10002bShare'
 
-   New-SmbShare -Name $directory.Name -Path $directory.FullName -FullAccess 'Administrators' -ReadAccess Everyone   
+   New-SmbShare -Name $directory.Name -Path $directory.FullName -FullAccess 'Administrators' -ReadAccess Everyone
 
    Copy-Item -Path 'C:\WindowsAzure\*' -Destination $directory.FullName –Recurse
    ```
 
-   > **Note**: To populate the file share with sample data, we use content of the *C:\\WindowsAzure* folder, which should contain about 100 MB worth of files
+     > **Note**: To populate the file share with sample data, we use content of the *C:\\WindowsAzure* folder, which should contain about 100 MB worth of files
 
 1. From the Windows PowerShell console, install the latest Az PowerShell module by running the following:
 
@@ -187,30 +190,12 @@ The main tasks for this exercise are as follows:
    Install-Module -Name Az -AllowClobber
    ```
 
-   > **Note**: When prompted, confirm that you want to proceed with the installation from PSGallery repository.
+     > **Note**: When prompted, confirm that you want to proceed with the installation of the NuGet provider and allow installation from the PSGallery repository. If you run into an error pertaining to the version of NuGet, run the following: `[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12`, then retry the command above.
 
 
 #### Task 3: Run Azure File Sync evaluation tool
 
-1. Within the RDP session to the Azure VM, from the Windows PowerShell console, install the latest version of Package Management and PowerShellGet by running the following:
-
-   ```powershell
-   Install-Module -Name PackageManagement -Repository PSGallery -Force
-
-   Install-Module -Name PowerShellGet -Repository PSGallery -Force
-   ```
-
-   > **Note**: When prompted, confirm that you want to proceed with the installation of the NuGet provider.
-
-1. Restart the PowerShell session.
-
-1. From the Windows PowerShell console, install the Azure File Sync PowerShell module by running the following:
-
-   ```powershell
-   Install-Module -Name Az.StorageSync -AllowClobber -Force
-   ```
-
-1. From the Windows PowerShell console, check whether the S:\az10002bShare file share does not have any compatibility issues with the Azure File Sync :
+1. Within the RDP session to the Azure VM, from the Windows PowerShell console, check whether the S:\az10002bShare file share does not have any compatibility issues with the Azure File Sync :
 
    ```powershell
    Invoke-AzStorageSyncCompatibilityCheck -Path 'S:\az10002bShare'
@@ -218,7 +203,9 @@ The main tasks for this exercise are as follows:
 
 1. Review the results and verify that no compatibility issues have been found.
 
+
 > **Result**: After you completed this exercise, you have created an Azure Storage account and a file share, prepare Windows Server 2016 for use with Azure File Sync, and run Azure File Sync evaluation tool
+
 
 
 ### Exercise 2: Prepare Azure File Sync infrastructure
@@ -248,7 +235,7 @@ The main tasks for this exercise are as follows:
 
 1. From the **New** blade, search Azure Marketplace for **Azure File Sync**.
 
-1. Use the search result to navigate to the **Deploy Storage Sync** blade.
+1. Use the list of search results to navigate to the **Deploy Azure File Sync** blade.
 
 1. From the **Deploy Azure File Sync** blade, create a Storage Sync Service with the following settings:
 
@@ -256,8 +243,8 @@ The main tasks for this exercise are as follows:
 
     - Resource group: the name of a new resource group **az1000203b-RG**
 
-    - Storage sync service name: **az1000202b-ss**
-    
+    - Name: **az1000202b-ss**
+
     - Region: the name of the Azure region in which you created the storage account earlier in this exercise
 
 
@@ -323,19 +310,17 @@ The main tasks for this exercise are as follows:
 
 1. Within the RDP session to the Azure VM, in the Azure portal, monitor the health status of the server endpoint **az100021b-vm1** on the **az1000202b-syncgroup1** blade, as it changes from **Provisioning** to **Pending** and, eventually, to a green checkmark.
 
-   > **Note**: You should be able to proceed to the next step after a few minutes. 
+     > **Note**: You should be able to proceed to the next step after a few minutes.
 
-1. In the Azure portal, navigate to the blade for the storage account you created earlier in the lab, switch to the **Files** tab and then click **az10002bshare1**.
+1. In the Azure portal, navigate to the blade for the storage account you created earlier in the lab, switch to the **File shares** tab and then click **az10002bshare1**.
 
 1. On the **az10002bshare1** blade, click **Connect**.
 
 1. From the **Connect** blade, copy into Clipboard the PowerShell commands that connect to the file share from a Windows computer.
 
-1. Within the RDP session, start a Windows PowerShell ISE session. 
+1. Within the RDP session, start a Windows PowerShell ISE session.
 
 1. From the Windows PowerShell ISE session, open the script pane and paste into it the content of your local Clipboard.
-
-1. Add the ` -Persist` switch to the end of the line containing the `New-PSDrive` cmdlet.
 
 1. Execute the script and verify that its output confirms successful mapping of the Z: drive to the Azure Storage File Service share.
 
@@ -343,15 +328,42 @@ The main tasks for this exercise are as follows:
 
 1. Display the Properties window of individual folders on the Z: drive, review the Security tab, and note that the entries represent NTFS permissions assigned to the corresponding folders on the S: drive.
 
+1. Close the RDP session.
 
 > **Result**: After you completed this exercise, you have deployed the Storage Sync Service, installed the Azure File Sync Agent, registered the Windows Server with Storage Sync Service, created a sync group and a cloud endpoint, created a server endpoint, and validated Azure File Sync operations.
 
 
+
 ## Exercise 3: Remove lab resources
+
 
 #### Task 1: Open Cloud Shell
 
 1. At the top of the portal, click the **Cloud Shell** icon to open the Cloud Shell pane.
+
+1. At the Cloud Shell interface, if needed, select **PowerShell**.
+
+1. At the **Cloud Shell** PowerShell prompt, run the following commands to unregister the server and delete the Sync Server Endpoint you created in this lab
+
+   ```powershell
+   $RegisteredServer = Get-AzStorageSyncServer -ResourceGroupName "az1000203b-RG" -StorageSyncServiceName "az1000202b-ss" 
+   Unregister-AzStorageSyncServer -Force -ResourceGroupName "az1000203b-RG" -StorageSyncServiceName "az1000202b-ss" -ServerId $RegisteredServer.ServerId
+   ```
+     > **Note**: You should review the warnings at [Remove a server endpoint](https://docs.microsoft.com/en-us/azure/storage/files/storage-sync-files-server-endpoint#remove-a-server-endpoint) before removing an endpoint.
+
+1. At the **Cloud Shell** PowerShell prompt, run the following commands to delete the Sync Cloud Endpoint you created in this lab
+
+   ```powershell
+   $CloudEndpoint =  Get-AzStorageSyncCloudEndpoint -ResourceGroupName "az1000203b-RG" -StorageSyncServiceName "az1000202b-ss" -SyncGroupName "az1000202b-syncgroup1"
+   Remove-AzStorageSyncCloudEndpoint -Force -ResourceGroupName "az1000203b-RG" -StorageSyncServiceName "az1000202b-ss" -SyncGroupName "az1000202b-syncgroup1" -Name $CloudEndpoint.CloudEndpointName
+   ```
+
+1. At the **Cloud Shell** PowerShell prompt, run the following command to delete the Storage Sync Group you created in this lab
+
+   ```powershell
+   Remove-AzStorageSyncGroup -Force -ResourceGroupName "az1000203b-RG" -StorageSyncServiceName "az1000202b-ss" -Name "az1000202b-syncgroup1"
+   ```
+   > **Note**: The Storage Sync Service will be deleted with its Resource Group in the steps below only if there are _no Sync Groups_; and a Sync Group can only be deleted if there are _no endpoints or registered servers_.
 
 1. At the Cloud Shell interface, select **Bash**.
 
@@ -363,6 +375,7 @@ The main tasks for this exercise are as follows:
 
 1. Verify that the output contains only the resource groups you created in this lab. These groups will be deleted in the next task.
 
+
 #### Task 2: Delete resource groups
 
 1. At the **Cloud Shell** command prompt, type in the following command and press **Enter** to delete the resource groups you created in this lab
@@ -372,5 +385,6 @@ The main tasks for this exercise are as follows:
    ```
 
 1. Close the **Cloud Shell** prompt at the bottom of the portal.
+
 
 > **Result**: In this exercise, you removed the resources used in this lab.
